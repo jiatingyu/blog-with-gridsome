@@ -13,11 +13,7 @@
       "
     >
       <div style="position:absolute; top:20px; right:20px; z-index:2;">
-        <el-tooltip
-          effect="dark"
-          :content="fullButton.full ? '退出' : '全屏'"
-          placement="bottom-end"
-        >
+        <el-tooltip effect="dark" :content="fullButton.full ? '退出' : '全屏'" placement="bottom-end">
           <el-button
             @click="full"
             :icon="fullButton.full ? 'el-icon-close' : 'el-icon-rank'"
@@ -42,23 +38,10 @@
       </div>
       <h1 class="project-name">{{ blogTitle }}</h1>
       <h2 class="project-tagline">{{ blogDescribe }}</h2>
-      <a
-        :href="'https://github.com/' + githubUsername"
-        class="btn"
-        target="_blank"
-        >GitHub主页</a
-      >
-      <a
-        href="https://github.com/GitHub-Laziji/vblog"
-        class="btn"
-        target="_blank"
-        v-if="!mini"
-        >博客源码</a
-      >
+      <a :href="'https://github.com/' + githubUsername" class="btn" target="_blank">GitHub主页</a>
+      <a href="https://github.com/GitHub-Laziji/vblog" class="btn" target="_blank" v-if="!mini">博客源码</a>
     </section>
-    <div
-      style="position:relative;  z-index:2;margin: auto;margin-top:-30px;width:64rem;"
-    >
+    <div style="position:relative;  z-index:2;margin: auto;margin-top:-30px;width:64rem;">
       <el-card shadow="never" :body-style="{ padding: '0px' }">
         <el-row>
           <el-col :span="10">
@@ -79,35 +62,19 @@
                   :index="'#webSites-' + index"
                   v-for="(item, index) in webSites"
                   :key="'#webSites' + index"
-                  >{{ item.name }}</el-menu-item
-                >
+                >{{ item.name }}</el-menu-item>
               </el-submenu>
             </el-menu>
           </el-col>
-          <el-col
-            :span="8"
-            style="text-align: center;padding: 12px 0px 0px 10px"
-          >
+          <el-col :span="8" style="text-align: center;padding: 12px 0px 0px 10px">
             <el-row>
               <el-col :span="4">
                 <el-popover placement="top" trigger="hover">
                   <div style="text-align: center">
-                    <el-progress
-                      color="#67C23A"
-                      type="circle"
-                      :percentage="music.volume"
-                    ></el-progress>
+                    <el-progress color="#67C23A" type="circle" :percentage="music.volume"></el-progress>
                     <br />
-                    <el-button
-                      @click="changeVolume(-10)"
-                      icon="el-icon-minus"
-                      circle
-                    ></el-button>
-                    <el-button
-                      @click="changeVolume(10)"
-                      icon="el-icon-plus"
-                      circle
-                    ></el-button>
+                    <el-button @click="changeVolume(-10)" icon="el-icon-minus" circle></el-button>
+                    <el-button @click="changeVolume(10)" icon="el-icon-plus" circle></el-button>
                   </div>
 
                   <el-button
@@ -130,12 +97,9 @@
                   style="width: 100%;"
                 ></el-slider>
               </el-col>
-              <el-col
-                :span="6"
-                style="padding: 9px 0px 0px 10px;color:#909399;font-size: 13px"
-              >
+              <el-col :span="6" style="padding: 9px 0px 0px 10px;color:#909399;font-size: 13px">
                 {{ $util.formatTime(music.currentTime) }}/{{
-                  $util.formatTime(music.maxTime)
+                $util.formatTime(music.maxTime)
                 }}
               </el-col>
             </el-row>
@@ -209,7 +173,7 @@ export default {
   components: {
     Sidebar,
     AppMain,
-    Foot,
+    Foot
   },
   data() {
     return {
@@ -217,13 +181,13 @@ export default {
         isPlay: false,
         currentTime: 0,
         maxTime: 0,
-        volume: 100,
+        volume: 100
       },
       fullButton: {
-        full: false,
+        full: false
       },
       topbar: {
-        active: "",
+        active: ""
       },
       randomIcon: [],
       githubUsername: "Jiatingyu",
@@ -246,61 +210,65 @@ export default {
       webSites: [
         {
           name: "简书",
-          url: "https://www.jianshu.com/u/122b9c024daf",
-        },
-      ],
+          url: "https://www.jianshu.com/u/122b9c024daf"
+        }
+      ]
     };
   },
   watch: {
     "$refs.music.currentTime": function() {
       console.log(this.$refs.music.currentTime);
-    },
+    }
   },
   mounted() {
-    this.$nextTick(() => {});
-    let width = window.innerWidth;
-    for (let i = 0; i < 12; i++) {
-      let temp = {};
-      let left = this.$util.randomInt(10, width - 310);
-      if (left > width / 2 - 150) {
-        left += 300;
-      }
-      temp["left"] = left;
-      temp["top"] = this.$util.randomInt(20, 300);
-      temp["size"] = this.$util.randomInt(20, 40);
-      this.randomIcon.push(temp);
+    if (process.isClient) {
+      // this.$nextTick(() => {});
+      // let width = window.innerWidth;
+      // for (let i = 0; i < 12; i++) {
+      //   let temp = {};
+      //   let left = this.$util.randomInt(10, width - 310);
+      //   if (left > width / 2 - 150) {
+      //     left += 300;
+      //   }
+      //   temp["left"] = left;
+      //   temp["top"] = this.$util.randomInt(20, 300);
+      //   temp["size"] = this.$util.randomInt(20, 40);
+      //   this.randomIcon.push(temp);
+      // }
+      // console.log(this.randomIcon);
     }
-    console.log(this.randomIcon);
   },
   created() {},
   methods: {
     selectTopbar(index) {
       //取消菜单选中状态
       this.topbar.active = this.topbar.active == "" ? " " : "";
-      switch (index) {
-        case "#githubHome":
-          window.open("https://github.com/" + this.githubUsername);
-          break;
-        case "#blog":
-          if (this.blog) {
-            window.open(
-              (this.blog.match(/https?:\/\//i) ? "" : "https://") + this.blog
-            );
-          } else {
-            this.$message({
-              message: "博主没有其他博客",
-              type: "info",
-            });
-          }
-          break;
-        default:
-          if (/#webSites-\d+/.test(index)) {
-            let i = parseInt(index.split("-")[1]);
-            let url = this.webSites[i].url;
-            window.open((url.match(/https?:\/\//i) ? "" : "https://") + url);
-          }
-          break;
-      }
+      // if (process.isClient) {
+      //   switch (index) {
+      //     case "#githubHome":
+      //       window.open("https://github.com/" + this.githubUsername);
+      //       break;
+      //     case "#blog":
+      //       if (this.blog) {
+      //         window.open(
+      //           (this.blog.match(/https?:\/\//i) ? "" : "https://") + this.blog
+      //         );
+      //       } else {
+      //         this.$message({
+      //           message: "博主没有其他博客",
+      //           type: "info"
+      //         });
+      //       }
+      //       break;
+      //     default:
+      //       if (/#webSites-\d+/.test(index)) {
+      //         let i = parseInt(index.split("-")[1]);
+      //         let url = this.webSites[i].url;
+      //         window.open((url.match(/https?:\/\//i) ? "" : "https://") + url);
+      //       }
+      //       break;
+      //   }
+      // }
     },
     moveIcon(index) {},
     full() {
@@ -323,8 +291,8 @@ export default {
       } else {
         this.music.volume = this.music.volume + v;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

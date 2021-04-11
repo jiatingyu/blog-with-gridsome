@@ -26,42 +26,38 @@ module.exports = function (api) {
 
   api.createPages(async ({ createPage, graphql }) => {
     // Use the Pages API here: https://gridsome.org/docs/pages-api/
-    const { data } = await graphql(`{
-      allStrapiBlog {
-        edges{
-          node{
-            id
-            title
-            desc
-            cover{
-              url
-            }
-            content
-            createDate
-            attention
-            updateTime
-          }
-        }
-      }
-    }`)
-    data.allStrapiBlog.edges.forEach(({ node }) => {
-      createPage({
-        path: `/blogs/${node.id}`,
-        component: './src/templates/blog-detail.vue',
-        context: {
-          id: node.id,
-          title: node.title,
-          desc: node.desc,
-          content: node.content,
-          createDate: node.createDate,
-          updateTime: node.updateTime,
-          cover: node.cover
-        }
-      })
-    })
-    // createPage({
-    //   path: '/blogs/:id',
-    //   component: './src/templates/blog-detail.vue'
+    // const { data } = await graphql(`{
+    //   allStrapiBlog {
+    //     edges{
+    //       node{
+    //         id
+    //         title
+    //         desc
+    //         cover{
+    //           url
+    //         }
+    //         content
+    //         createDate
+    //         attention
+    //         updateTime
+    //       }
+    //     }
+    //   }
+    // }`)
+    // data.allStrapiBlog.edges.forEach(({ node }) => {
+    //   createPage({
+    //     path: `/blogs/${node.id}`,
+    //     component: './src/templates/blog-detail.vue',
+    //     context: {
+    //       id: node.id,
+    //       title: node.title,
+    //       desc: node.desc,
+    //       content: node.content,
+    //       createDate: node.createDate,
+    //       updateTime: node.updateTime,
+    //       cover: node.cover
+    //     }
+    //   })
     // })
   })
 }

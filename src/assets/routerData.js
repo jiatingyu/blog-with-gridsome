@@ -13,7 +13,7 @@ export default [{
 }, {
     meta: {
         icon: 'el-icon-service',
-        title: '开源博客',
+        title: '开放博客',
     },
     path: '/opensource'
 }, {

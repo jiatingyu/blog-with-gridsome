@@ -14,7 +14,7 @@
       >
         <!-- <pre style="font-family: '微软雅黑'">{{blog.description}}</pre> -->
       </div>
-      <div v-html="$markdown(blog.content)" class="markdown-body" style="padding-top: 20px"></div>
+      <div v-html="transformHtmltoMd(blog.content)" class="markdown-body" style="padding-top: 20px"></div>
     </el-card>
     <el-card
       shadow="never"
@@ -47,24 +47,31 @@ query{
 
 </page-query>
 <script>
+import markdownIt from "markdown-it";
+let mk = new markdownIt();
 export default {
   name: "Index",
   metaInfo: {
-    title: "首页"
+    title: "首页",
   },
   data() {
     return {
-      blog: {}
+      blog: {},
     };
   },
   created() {
     this.blog = this.$page.active.edges[0].node;
   },
+  methods: {
+    transformHtmltoMd(html) {
+      return mk.render(html);
+    },
+  },
   computed: {
     // pageActive() {
     //   return this.$page.active.edges[0].node;
     // }
-  }
+  },
 };
 </script>
 

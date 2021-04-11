@@ -1,17 +1,17 @@
 <template>
   <Layout>
     <h2>请填写基本信息</h2>
-    <el-form :label-position="'left'" label-width="150px" :model="subInfo">
-      <el-form-item label="姓名：">
+    <el-form :label-position="'left'" label-width="150px" ref="subInfo" :model="subInfo">
+      <el-form-item label="姓名：" prop="username">
         <el-input v-model="subInfo.username"></el-input>
       </el-form-item>
-      <el-form-item label="联系电话：">
+      <el-form-item label="联系电话：" prop="phone">
         <el-input v-model="subInfo.phone"></el-input>
       </el-form-item>
-      <el-form-item label="留言：">
+      <el-form-item label="留言：" prop="desc">
         <el-input type="textarea" rows="4" v-model="subInfo.desc"></el-input>
       </el-form-item>
-      <el-button type="primary" @click="submit()">提交</el-button>
+      <el-button type="primary" @click="submit">提交</el-button>
     </el-form>
   </Layout>
 </template>
@@ -26,7 +26,7 @@ export default {
         username: "",
         phone: "",
         desc: "",
-        createDate: new Date()
+        create_date: new Date()
       }
     };
   },
@@ -38,7 +38,7 @@ export default {
     async submit() {
       try {
         await axios.request({
-          url: "http://localhost:1337/concats",
+          url: process.env.GRIDSOME_API_URL + "/concats",
           method: "post",
           data: this.subInfo,
           headers: {
@@ -49,6 +49,7 @@ export default {
           message: "保存成功！！！",
           type: "info"
         });
+        this.$refs["subInfo"].resetFields();
       } catch (error) {
         this.$message({
           message: error,

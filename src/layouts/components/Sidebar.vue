@@ -13,12 +13,12 @@
       <div v-if="!token" style="font-size: 0.9rem;line-height: 1.5;color: #606c71;">
         <el-tag type="danger" size="small">&nbsp;</el-tag>&nbsp;&nbsp;
         Token未绑定&nbsp;&nbsp;
-        <el-button type="text" @click="openTokenDialog">绑定</el-button>
+        <el-button type="text">绑定</el-button>
       </div>
       <div v-if="token" style="font-size: 0.9rem;line-height: 1.5;color: #303133;">
         <el-tag type="success" size="small">&nbsp;</el-tag>&nbsp;&nbsp;
         Token已绑定&nbsp;&nbsp;
-        <el-button type="text" @click="cancellation">注销</el-button>
+        <el-button type="text">注销</el-button>
       </div>
       <div style="margin-top: 10px;text-align: left">
         <el-alert
@@ -47,7 +47,7 @@ export default {
       menuList: [],
       token: "",
       githubUsername: "",
-      mini: ""
+      mini: "",
     };
   },
   computed: {
@@ -59,14 +59,40 @@ export default {
   },
   methods: {
     onSelect(index) {
-      this.$router.push(index);
+      if (process.isClient) {
+        // window.location.href = index;
+        this.$route.path != index && this.$router.push(index);
+      }
     },
-    openTokenDialog() {
-      this.$refs.tokenDialog.open(() => {});
-    },
-    cancellation() {
-      this.$store.dispatch("Cancellation");
-    }
-  }
+    // openTokenDialog() {
+    //   this.$refs.tokenDialog.open(() => {});
+    // },
+    // cancellation() {
+    //   this.$store.dispatch("Cancellation");
+    // }
+  },
+
+  //  query($page:Int){
+  //     allblog : allStrapiBlog(perPage:1,page:$page) @paginate {
+  //       pageInfo{
+  //         totalPages
+  //         totalItems
+  //       }
+  //       edges{
+  //         node{
+  //           id
+  //           title
+  //           cover{
+  //             url
+  //           }
+  //           desc
+  //           createDate
+  //           attention
+  //           updateTime
+  //         }
+  //       }
+  //     }
+  //   }
 };
 </script>
+

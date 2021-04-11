@@ -30,11 +30,12 @@ export default function (Vue, params) {
   // 。。。。。
 
 
-  // 通过混入给全局加data
+  // 通过混入给全局加data 
   Vue.mixin({
     data() {
       return {
-        IMAGEURL: process.env.GRIDSOME_API_URL
+        // GRIDSOME_API_URL: process.env.GRIDSOME_API_URL,
+        // defaultImg: '@/assets/default.jpg'
       }
     }
   })
@@ -59,47 +60,51 @@ export default function (Vue, params) {
       document.title = store.state.configuration.htmlTitle
     }
   }
-  Vue.prototype.$share = function (message) {
-    if (!message) {
-      message = window.location
-    } else {
-      let arr = (window.location + "").split("#")
-      message = arr[0] + "#" + message
-    }
-    if (util.copy(message)) {
-      Vue.prototype.$confirm('链接已复制,去分享给好友吧!!', '分享', {
-        showCancelButton: false,
-        showClose: false,
-        type: 'success'
-      })
-    } else {
-      Vue.prototype.$confirm('链接复制失败,可能因为浏览器不兼容', '分享', {
-        showCancelButton: false,
-        showClose: false,
-        type: 'warning'
-      })
-    }
-  }
+  // Vue.prototype.$share = function (message) {
+  //   if (process.isClient) {
+  //     if (!message) {
+  //       message = window.location
+  //     } else {
+  //       let arr = (window.location + "").split("#")
+  //       message = arr[0] + "#" + message
+  //     }
+  //     if (util.copy(message)) {
+  //       Vue.prototype.$confirm('链接已复制,去分享给好友吧!!', '分享', {
+  //         showCancelButton: false,
+  //         showClose: false,
+  //         type: 'success'
+  //       })
+  //     } else {
+  //       Vue.prototype.$confirm('链接复制失败,可能因为浏览器不兼容', '分享', {
+  //         showCancelButton: false,
+  //         showClose: false,
+  //         type: 'warning'
+  //       })
+  //     }
+  //   }
+  // }
 
-  Vue.prototype.$mobileShare = function (message) {
-    if (!message) {
-      message = window.location
-    } else {
-      let arr = (window.location + "").split("#")
-      message = arr[0] + "#" + message
-    }
-    if (util.copy(message)) {
-      Vue.prototype.$dialog.alert({
-        title: '分享',
-        message: '链接已复制,去分享给好友吧!!'
-      })
-    } else {
-      Vue.prototype.$dialog.alert({
-        title: '分享',
-        message: '链接复制失败,可能因为浏览器不兼容'
-      })
-    }
-  }
+  // Vue.prototype.$mobileShare = function (message) {
+  //   if (process.isClient) {
+  //     if (!message) {
+  //       message = window.location
+  //     } else {
+  //       let arr = (window.location + "").split("#")
+  //       message = arr[0] + "#" + message
+  //     }
+  //     if (util.copy(message)) {
+  //       Vue.prototype.$dialog.alert({
+  //         title: '分享',
+  //         message: '链接已复制,去分享给好友吧!!'
+  //       })
+  //     } else {
+  //       Vue.prototype.$dialog.alert({
+  //         title: '分享',
+  //         message: '链接复制失败,可能因为浏览器不兼容'
+  //       })
+  //     }
+  //   }
+  // }
 
 
 

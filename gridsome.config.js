@@ -34,10 +34,14 @@ module.exports = {
     }
   ],
   templates: {
-    // zhel
-    posts: [{
-      path: '/posts/:id',
-      component: './src/templates/posts.vue'
+    // 这里的posts要必须有集合
+    // posts: [{
+    //   path: '/posts/:id',
+    //   component: './src/templates/posts.vue'
+    // }]
+    StrapiBlog: [{
+      path: '/blogs/:id',
+      component: './src/templates/blog-detail.vue'
     }]
   }
 } 

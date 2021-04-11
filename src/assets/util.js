@@ -18,17 +18,17 @@ export default {
     },
     //yyyy-MM-ddThh-mm-ss.*
     utcToLocal(time) {
-        let formatNum = (num)=>{
-            return num>=10?num:('0'+num)
+        let formatNum = (num) => {
+            return num >= 10 ? num : ('0' + num)
         }
         let arr = time.split(/[^0-9]/)
         let worldDate = new Date(arr[0], arr[1] - 1, arr[2], arr[3], arr[4], arr[5])
         let localDate = new Date(worldDate.getTime() + 8 * 60 * 60 * 1000)
         return formatNum(localDate.getFullYear()) + "-"
-            + formatNum((localDate.getMonth() + 1)) + "-" 
-            + formatNum(localDate.getDate()) + " " 
-            + formatNum(localDate.getHours()) + ":" 
-            + formatNum(localDate.getMinutes()) + ":" 
+            + formatNum((localDate.getMonth() + 1)) + "-"
+            + formatNum(localDate.getDate()) + " "
+            + formatNum(localDate.getHours()) + ":"
+            + formatNum(localDate.getMinutes()) + ":"
             + formatNum(localDate.getSeconds())
     },
     guid() {
@@ -47,36 +47,40 @@ export default {
         r = parseInt(r, 10)
         return r
     },
-    fullScreen() {
-        var element = document.documentElement
-        if (window.ActiveXObject) {
-            var WsShell = new ActiveXObject('WScript.Shell')
-            WsShell.SendKeys('{F11}')
-        } else if (element.requestFullScreen) {
-            element.requestFullScreen()
-        } else if (element.msRequestFullscreen) {
-            element.msRequestFullscreen()
-        } else if (element.webkitRequestFullScreen) {
-            element.webkitRequestFullScreen()
-        } else if (element.mozRequestFullScreen) {
-            element.mozRequestFullScreen()
-        }
-    },
-    fullExit() {
-        var element = document.documentElement
-        if (window.ActiveXObject) {
-            var WsShell = new ActiveXObject('WScript.Shell')
-            WsShell.SendKeys('{F11}')
-        } else if (element.requestFullScreen) {
-            document.exitFullscreen()
-        } else if (element.msRequestFullscreen) {
-            document.msExitFullscreen()
-        } else if (element.webkitRequestFullScreen) {
-            document.webkitCancelFullScreen()
-        } else if (element.mozRequestFullScreen) {
-            document.mozCancelFullScreen()
-        }
-    },
+    // fullScreen() {
+    //     if (process.isClient) {
+    //         var element = document.documentElement
+    //         if (window.ActiveXObject) {
+    //             var WsShell = new ActiveXObject('WScript.Shell')
+    //             WsShell.SendKeys('{F11}')
+    //         } else if (element.requestFullScreen) {
+    //             element.requestFullScreen()
+    //         } else if (element.msRequestFullscreen) {
+    //             element.msRequestFullscreen()
+    //         } else if (element.webkitRequestFullScreen) {
+    //             element.webkitRequestFullScreen()
+    //         } else if (element.mozRequestFullScreen) {
+    //             element.mozRequestFullScreen()
+    //         }
+    //     }
+    // },
+    // fullExit() {
+    //     if (process.isClient) {
+    //         var element = document.documentElement
+    //         if (window.ActiveXObject) {
+    //             var WsShell = new ActiveXObject('WScript.Shell')
+    //             WsShell.SendKeys('{F11}')
+    //         } else if (element.requestFullScreen) {
+    //             document.exitFullscreen()
+    //         } else if (element.msRequestFullscreen) {
+    //             document.msExitFullscreen()
+    //         } else if (element.webkitRequestFullScreen) {
+    //             document.webkitCancelFullScreen()
+    //         } else if (element.mozRequestFullScreen) {
+    //             document.mozCancelFullScreen()
+    //         }
+    //     }
+    // },
 
     parseHeaders(headers) {
         try {
@@ -121,14 +125,16 @@ export default {
 
         return (m < 10 ? "0" : "") + parseInt(it / 60) + ":" + (s < 10 ? "0" : "") + parseInt(it % 60)
     },
-    getWindowSize() {
-        let windowSize = {}
-        windowSize.width = window.innerWeight || document.documentElement.clientWidth || document.body.clientWidth
-        windowSize.height = window.innerWeight || document.documentElement.clientHeight || document.body.clientHeight
-        return windowSize
-    },
-    addHttp(url){
-        return (url.match(/https?:\/\//i)?'':'https://') + url
+    // getWindowSize() {
+    //     if (process.isClient) {
+    //         let windowSize = {}
+    //         windowSize.width = window.innerWeight || document.documentElement.clientWidth || document.body.clientWidth
+    //         windowSize.height = window.innerWeight || document.documentElement.clientHeight || document.body.clientHeight
+    //         return windowSize
+    //     }
+    // },
+    addHttp(url) {
+        return (url.match(/https?:\/\//i) ? '' : 'https://') + url
     }
 
 }

@@ -12,21 +12,13 @@
           plain
           circle
         ></el-button>
-        <!-- <el-button
-          type="primary"
-          icon="el-icon-edit"
-          round
-          plain
-          style="float: right;"
-          @click="goAdd"
-        >写博文</el-button>-->
       </el-card>
 
-      <div v-if="blogs && blogs.length > 0">
+      <div v-if="$page.posts.edges && $page.posts.edges.length > 0">
         <el-card
           shadow="hover"
-          v-for="(item, index) in blogs"
-          :key="'p' + index"
+          v-for="item in $page.posts.edges"
+          :key="item.id"
           style="margin-bottom: 20px"
         >
           <div slot="header">
@@ -42,39 +34,29 @@
                   </g-link>
                 </span>
               </el-col>
-              <el-col :span="8">
-                <!-- <div style="text-align: right;">
-                  <el-button style="padding: 3px 0" type="text" icon="el-icon-share"></el-button>
-                  <el-button style="padding: 3px 0" type="text" icon="el-icon-edit"></el-button>
-                  <el-button style="padding: 3px 0" type="text" icon="el-icon-delete"></el-button>
-                </div>-->
-              </el-col>
             </el-row>
           </div>
-          <el-row>
-            <el-col :span="6">
-              <g-image :src="IMAGEURL + item.node.cover.url" style="width:80%"></g-image>
-            </el-col>
-            <el-col :span="18">
-              <div
-                style="font-size: 0.9rem;line-height: 1.5;color: #606c71;"
-              >最近更新 {{ item.node.updateTime }}</div>
-              <div
-                style="font-size: 1.1rem;line-height: 1.5;color: #303133;padding: 10px 0px 0px 0px"
-              >{{ item.node.desc }}</div>
-            </el-col>
-          </el-row>
+          <g-link :to="'/blogs/' + item.node.id">
+            <el-row>
+              <el-col :span="6">
+                <g-image
+                  v-if="item.node.cover"
+                  :src="getImageUrl + item.node.cover.url"
+                  style="width:80%"
+                ></g-image>
+                <g-image v-else style="width:80%" src="@/assets/default.jpg"></g-image>
+              </el-col>
+              <el-col :span="18">
+                <div
+                  style="font-size: 0.9rem;line-height: 1.5;color: #606c71;"
+                >最近更新 {{ item.node.updateTime }}</div>
+                <div
+                  style="font-size: 1.1rem;line-height: 1.5;color: #303133;padding: 10px 0px 0px 0px"
+                >{{ item.node.desc }}</div>
+              </el-col>
+            </el-row>
+          </g-link>
         </el-card>
-        <div style="text-align: center">
-          <!-- <el-pagination
-            @current-change="list"
-            background
-            layout="prev, pager, next"
-            :current-page.sync="query.page"
-            :page-size="query.pageSize"
-            :total="query.pageNumber*query.pageSize"
-          ></el-pagination>-->
-        </div>
         <el-pagination
           background
           layout="prev, pager, next"
@@ -99,27 +81,27 @@
 </template>
 
 <page-query>
-  query($page:Int){
-    allblog : allStrapiBlog(perPage:1,page:$page) @paginate {
-      pageInfo{
-        totalPages
-        totalItems
-      }
-      edges{
-        node{
-          id
-          title
-          cover{
-            url
+ query($page : Int){
+    posts : allStrapiBlog(perPage:1,page : $page) @paginate {
+        pageInfo{
+          totalPages
+          totalItems
+        }
+        edges{
+          node{
+            id
+            title
+            cover{
+              url
+            }
+            desc
+            createDate
+            attention
+            updateTime
           }
-          desc
-          createDate
-          attention
-          updateTime
         }
       }
-    }
-  }
+ }
 
 </page-query>
 
@@ -132,29 +114,37 @@ export default {
       searchKey: "",
       pageInfo: {
         totalPages: 0,
-        totalItems: 0
+        totalItems: 0,
       },
       currentPage: 1,
-      pageSize: 1
+      pageSize: 1,
     };
   },
   metaInfo: {
     title: "我的博客",
-    meta: [{ name: "description", content: `我的博客-jiatingyu` }]
+    meta: [{ name: "description", content: `我的博客-jiatingyu` }],
   },
   created() {
-    this.blogs = this.$page.allblog.edges;
-    this.pageInfo = this.$page.allblog.pageInfo;
+    this.blogs = this.$page.posts.edges;
+    this.pageInfo = this.$page.posts.pageInfo;
+  },
+  computed: {
+    getImageUrl() {
+      return process.env.GRIDSOME_API_URL;
+    },
+  },
+  mounted() {
+    this.currentPage = +this.$route.params.page || 1;
   },
   methods: {
     search() {},
-    changePageNum(e) {
-      console.log("e", e);
-      this.currentPage = e || 1;
-      debugger;
-      this.$router.push({ name: "blogsxx", params: { e } });
-    }
-  }
+    changePageNum(num) {
+      this.currentPage = num || 1;
+      this.$router.push({
+        path: num != 1 ? `/myblogs/${num}` : "/myblogs",
+      });
+    },
+  },
 };
 </script>
 

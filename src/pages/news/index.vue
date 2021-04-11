@@ -1,5 +1,6 @@
 <template>
-  <Layout>
+  <div>new pages</div>
+  <!-- <Layout>
      <el-card shadow="never" style="min-height: 400px" v-if="blog.id">
             <div slot="header">
                 <span>{{blog.title}}</span>
@@ -18,7 +19,7 @@
                 <b>没有更新 ╮(๑•́ ₃•̀๑)╭</b>
             </font>
         </el-card>
-  </Layout>
+  </Layout>-->
 </template>
 
 
@@ -27,9 +28,9 @@
 <script>
 export default {
   name: "NewsPage",
-  data(){
-    
-  }
+  data() {
+    return {};
+  },
 };
 </script>
 
